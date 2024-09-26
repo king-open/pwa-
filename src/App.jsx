@@ -1,4 +1,4 @@
-import  { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import 'uno.css'
 
 function App() {
@@ -47,6 +47,10 @@ function App() {
     console.log('Text:', text)
   }
 
+  const triggerFileInput = () => {
+    fileInputRef.current.click()
+  }
+
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8 text-center">
       <h1 className="text-2xl sm:text-3xl font-bold mb-4">图文咨询</h1>
@@ -55,6 +59,7 @@ function App() {
           className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer w-full max-w-sm"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
+          onClick={triggerFileInput}
         >
           <input
             type="file"
@@ -68,7 +73,10 @@ function App() {
               <img src={image} alt="Uploaded" className="max-w-full max-h-48 sm:max-h-72" />
               <button
                 type="button"
-                onClick={handleDeleteImage}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleDeleteImage()
+                }}
                 className="absolute top-2 right-2 bg-white bg-opacity-70 rounded-full p-1 hover:bg-opacity-100"
               >
                 删除图片
